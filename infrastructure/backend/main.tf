@@ -1,21 +1,15 @@
 provider "azurerm" {
   features {}
-  subscription_id = "ee39387e-4892-429d-aeb2-ca4f142fbd25"
-}
-
-module "backend" {
-  source       = "./backend"
-  location     = "Canada Central"
-  group_number = var.group_number   # Replace with your Brightspace group number (e.g., "01")
+  subscription_id = "b3a5e2d7-0dbd-4996-a04c-aabf9261dc55" # 你的 Azure for Students 订阅 ID
 }
 
 resource "azurerm_resource_group" "backend" {
   name     = "cst8918-tfstate-rg"
-  location = var.location
+  location = "Canada Central"
 }
 
 resource "azurerm_storage_account" "backend" {
-  name                     = "cst8918tfstate${var.group_number}"
+  name                     = "cst8918tfstate04"
   resource_group_name      = azurerm_resource_group.backend.name
   location                 = azurerm_resource_group.backend.location
   account_tier             = "Standard"
