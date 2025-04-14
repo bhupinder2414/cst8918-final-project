@@ -1,4 +1,3 @@
-# 引用网络模块的输出
 data "azurerm_resource_group" "main" {
   name = "cst8918-final-project-group-04"
 }
@@ -21,7 +20,7 @@ resource "azurerm_kubernetes_cluster" "test" {
   location            = var.location
   resource_group_name = data.azurerm_resource_group.main.name
   dns_prefix          = "akstest"
-  kubernetes_version  = "1.32"
+  kubernetes_version  = "1.29.15"
 
   default_node_pool {
     name           = "default"
@@ -35,7 +34,9 @@ resource "azurerm_kubernetes_cluster" "test" {
   }
 
   network_profile {
-    network_plugin = "azure"
+    network_plugin    = "azure"
+    service_cidr      = "172.16.0.0/16"
+    dns_service_ip    = "172.16.0.10"
   }
 
   tags = {
@@ -49,7 +50,7 @@ resource "azurerm_kubernetes_cluster" "prod" {
   location            = var.location
   resource_group_name = data.azurerm_resource_group.main.name
   dns_prefix          = "aksprod"
-  kubernetes_version  = "1.32"
+  kubernetes_version  = "1.29.15"
 
   default_node_pool {
     name                = "default"
@@ -65,7 +66,9 @@ resource "azurerm_kubernetes_cluster" "prod" {
   }
 
   network_profile {
-    network_plugin = "azure"
+    network_plugin    = "azure"
+    service_cidr      = "172.16.0.0/16"
+    dns_service_ip    = "172.16.0.10"
   }
 
   tags = {
